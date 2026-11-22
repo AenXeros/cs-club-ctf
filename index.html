@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS Club CTF</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🚩 CS Club CTF</h1>
+    <p class="sub">Find the flags. Every flag looks like <code>flag{something_like_this}</code></p>
+  </div>
+  <div id="scorebox">
+    <input id="team" placeholder="Team name" maxlength="24">
+    <div id="score">0</div>
+    <div id="solvedCount">0 / 9 solved</div>
+  </div>
+</header>
+
+<!-- ======================= ROUND 1: LOOK UNDER THE HOOD ======================= -->
+<h2 class="round r1">Round 1 · Look under the hood</h2>
+
+<section class="card" id="c1">
+  <h3>1. Comment Section <span class="pts">50</span></h3>
+  <p>The developer of this page left a note for themselves. Visitors can't see it on the page... but it's still in the code.</p>
+  <!-- NOTE TO SELF: remember to delete this before the site goes live!  flag{always_read_the_source} -->
+  <div class="answer"></div>
+</section>
+
+<section class="card" id="c2">
+  <h3>2. Invisible Ink <span class="pts">75</span></h3>
+  <p>There is a flag written inside this box right now. You just can't see it.</p>
+  <p class="ink">&#102;&#108;&#97;&#103;&#123;&#104;&#105;&#100;&#100;&#101;&#110;&#95;&#105;&#115;&#95;&#110;&#111;&#116;&#95;&#103;&#111;&#110;&#101;&#125;</p>
+  <div class="answer"></div>
+</section>
+
+<!-- ======================= ROUND 2: ENCODING ======================= -->
+<h2 class="round r2">Round 2 · Secret codes that aren't secret</h2>
+
+<section class="card" id="c3">
+  <h3>3. Not So Secret <span class="pts">100</span></h3>
+  <p>Someone "protected" this flag by scrambling it. It isn't locked, just written differently.</p>
+  <pre class="blob">ZmxhZ3tiYXNlNjRfaXNfbm90X2VuY3J5cHRpb259</pre>
+  <div class="answer"></div>
+</section>
+
+<section class="card" id="c4">
+  <h3>4. Robot Talk <span class="pts">100</span></h3>
+  <p>A robot left you a message. Every group of 8 is one letter.</p>
+  <pre class="blob">01100110 01101100 01100001 01100111 01111011 01100010 01100101 01100101 01110000 01011111 01100010 01101111 01101111 01110000 01111101</pre>
+  <div class="answer"></div>
+</section>
+
+<!-- ======================= ROUND 3: CIPHERS ======================= -->
+<h2 class="round r3">Round 3 · Crack the cipher</h2>
+
+<section class="card" id="c5">
+  <h3>5. Hail Caesar <span class="pts">100</span></h3>
+  <p>Julius Caesar shifted every letter of his messages forward by 3. Shift them back.</p>
+  <pre class="blob">iodj{yhql_ylgl_ylfl}</pre>
+  <div class="answer"></div>
+</section>
+
+<section class="card" id="c6">
+  <h3>6. Unknown Shift <span class="pts">150</span></h3>
+  <p>Same kind of cipher, but nobody told you the shift this time.</p>
+  <pre class="blob">oujp{kadcn_oxaln_frwb}</pre>
+  <div class="answer"></div>
+</section>
+
+<!-- ======================= ROUND 4: NEVER TRUST THE BROWSER ======================= -->
+<h2 class="round r4">Round 4 · Never trust the browser</h2>
+
+<section class="card" id="c7">
+  <h3>7. Guest Pass <span class="pts">150</span></h3>
+  <p>The staff room only opens for admins. You are not an admin. Yet.</p>
+  <a class="btn" href="?role=guest#c7">Log in as guest</a>
+  <div id="staffroom" class="screen">Not logged in.</div>
+  <div class="answer"></div>
+</section>
+
+<section class="card" id="c8">
+  <h3>8. The Bouncer <span class="pts">150</span></h3>
+  <p>This door has a password. The bouncer checking it is standing right here in the page.</p>
+  <input id="bouncerInput" placeholder="Password" autocomplete="off">
+  <button class="btn" onclick="knock()">Knock</button>
+  <div id="bouncerOut" class="screen">The bouncer stares at you.</div>
+  <script>
+    // TODO: move this check to the server before launch!!
+    function checkPassword(guess) {
+      return btoa(guess) === "c3dvcmRmaXNo";
+    }
+    function knock() {
+      var guess = document.getElementById("bouncerInput").value;
+      if (checkPassword(guess)) {
+        document.getElementById("bouncerOut").innerText = "Come on in. " + unlock("151b0e151f05051a0d1d0330010d020c2c0b1b120c1917390f12011f0a", guess);
+      } else {
+        document.getElementById("bouncerOut").innerText = "Wrong password. Go away.";
+      }
+    }
+  </script>
+  <div class="answer"></div>
+</section>
+
+<!-- ======================= FINAL BOSS ======================= -->
+<h2 class="round r5">Final Boss</h2>
+
+<section class="card boss" id="c9">
+  <h3>9. The Vault <span class="pts">300</span></h3>
+  <p>Everything you learned today, in one lock. The vault code is hidden somewhere near here, and it's protected twice.</p>
+  <!-- vault code backup. I encoded it AND shifted it, so it's totally safe:  dHVqc194anhmcmpfNDI= -->
+  <input id="vaultInput" placeholder="Vault code" autocomplete="off">
+  <button class="btn" onclick="openVault()">Open</button>
+  <div id="vaultOut" class="screen">🔒 Locked.</div>
+  <div class="answer"></div>
+</section>
+
+<!-- ======================= TOOLBOX ======================= -->
+<h2 class="round tools">🧰 Hacker Toolbox</h2>
+
+<section class="card toolbox">
+  <p>Paste scrambled text here, then pick a tool.</p>
+  <textarea id="toolIn" placeholder="Paste text here"></textarea>
+  <div>
+    <button class="btn" onclick="tool('b64')">Decode Base64</button>
+    <button class="btn" onclick="tool('bin')">Binary to text</button>
+    <button class="btn" onclick="tool('all')">Try all 25 Caesar shifts</button>
+  </div>
+  <div class="shiftrow">
+    Caesar shift back by <b id="shiftNum">3</b>
+    <input type="range" id="shift" min="1" max="25" value="3" oninput="tool('caesar')">
+  </div>
+  <pre id="toolOut" class="blob">Output shows up here.</pre>
+</section>
+
+<footer>
+  <button class="btn ghost" onclick="resetAll()">Reset my progress</button>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===================================================================== -->
+<!--   Nothing interesting below here. Just styling and the scoreboard.    -->
+<!--   (No flags are stored in plain text down here. We checked.)          -->
+<!-- ===================================================================== -->
+
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0 auto; padding: 20px; max-width: 900px; background: #202020; color: #eee; font-family: "Lexend", system-ui, sans-serif; font-weight: 300; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; position: sticky; top: 0; background: #202020; padding: 10px 0; z-index: 5; border-bottom: 1px solid #444; }
+  h1 { margin: 0; font-weight: 700; font-size: 30px; }
+  .sub { margin: 4px 0 0; opacity: .85; }
+  code { background: #111; padding: 2px 6px; border-radius: 4px; color: #ffb066; }
+  #scorebox { text-align: right; }
+  #team { background: #111; color: #fff; border: 1px solid #555; border-radius: 8px; padding: 6px 10px; font-family: inherit; width: 170px; text-align: right; }
+  #score { font-size: 40px; font-weight: 700; color: #00e676; line-height: 1.1; }
+  #solvedCount { font-size: 13px; opacity: .8; }
+  h2.round { margin: 34px 0 10px; font-weight: 700; font-size: 20px; padding-left: 12px; border-left: 6px solid #ff7700; }
+  h2.r2 { border-color: #0088ff; } h2.r3 { border-color: #c77dff; } h2.r4 { border-color: #00e676; } h2.r5 { border-color: #ff3b5c; } h2.tools { border-color: #888; }
+  .card { background: #1b1b1b; border: 2px solid #3a3a3a; border-radius: 14px; padding: 16px 18px; margin-bottom: 14px; }
+  .card.solved { border-color: #00e676; box-shadow: 0 0 14px rgba(0,230,118,.35); }
+  .card.boss { border-color: #ff3b5c; }
+  .card h3 { margin: 0 0 6px; font-weight: 500; font-size: 19px; }
+  .pts { float: right; background: #ff7700; color: #111; font-weight: 700; border-radius: 999px; padding: 2px 12px; font-size: 14px; }
+  .card.solved .pts { background: #00e676; }
+  .ink { color: #1b1b1b; }
+  .ink::selection { color: #111; background: #ffe066; }
+  .blob { background: #111; border-radius: 8px; padding: 12px; white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 15px; color: #9fe6a0; }
+  .screen { background: #111; border-radius: 8px; padding: 12px; margin-top: 10px; font-family: Menlo, Consolas, monospace; }
+  input, textarea { background: #111; color: #fff; border: 1px solid #555; border-radius: 8px; padding: 9px 10px; font-family: Menlo, Consolas, monospace; font-size: 14px; }
+  textarea { width: 100%; height: 70px; margin-bottom: 8px; }
+  .btn { display: inline-block; background: #0088ff; color: #fff; border: none; border-radius: 8px; padding: 9px 14px; font-family: inherit; font-weight: 500; font-size: 14px; cursor: pointer; text-decoration: none; margin: 4px 4px 4px 0; }
+  .btn.ghost { background: #333; }
+  .btn.hint { background: #444; }
+  .answer { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .answer input { flex: 1 1 240px; }
+  .feedback { flex-basis: 100%; min-height: 20px; font-size: 14px; }
+  .feedback.good { color: #00e676; } .feedback.bad { color: #ff6b6b; }
+  .hinttext { flex-basis: 100%; font-size: 14px; color: #ffd27a; }
+  .shiftrow { margin: 10px 0; } .shiftrow input { vertical-align: middle; width: 240px; padding: 0; }
+  footer { text-align: center; margin: 30px 0; }
+</style>
+
+<script>
+  var HASHES = {"1": "299574dd65753a57", "2": "6becc3c221d15016", "3": "5e769d6970b25547", "4": "3ad368e426fb7c70", "5": "d7061cf4d429b27c", "6": "42102b498bae7ac5", "7": "1c53f448fd30543c", "8": "7794f5059b9510c5", "9": "c425a497b8b8ed1b"};
+  var POINTS = {"1": 50, "2": 75, "3": 100, "4": 100, "5": 100, "6": 150, "7": 150, "8": 150, "9": 300};
+  var HINT_COST = 25;
+  var HINTS = {
+    1: "Right-click the page and choose View Page Source (or press Ctrl+U). Look near challenge 1.",
+    2: "Try selecting everything in the box with your mouse, or press Ctrl+A.",
+    3: "Letters, numbers and sometimes = at the end? That's Base64. Use the toolbox.",
+    4: "It's binary. Each group of 8 is one character. Use the toolbox.",
+    5: "Shift every letter back by 3. The toolbox slider does it for you.",
+    6: "There are only 25 possible shifts. Try them all and look for the one you can read.",
+    7: "Log in as guest, then look very carefully at the address bar.",
+    8: "View the page source and find the function called checkPassword. What is it comparing your guess to?",
+    9: "Find the comment in the source near the vault. Decode it once, then again a different way."
+  };
+
+  function fingerprint(text) {
+    var a = 2166136261, b = 5381;
+    for (var i = 0; i < text.length; i++) {
+      var c = text.charCodeAt(i);
+      a = Math.imul(a ^ c, 16777619) >>> 0;
+      b = (Math.imul(b, 33) ^ c) >>> 0;
+    }
+    return ("0000000" + a.toString(16)).slice(-8) + ("0000000" + b.toString(16)).slice(-8);
+  }
+
+  function unlock(hex, key) {
+    var out = "";
+    for (var i = 0; i < hex.length; i += 2) {
+      out += String.fromCharCode(parseInt(hex.substr(i, 2), 16) ^ key.charCodeAt((i / 2) % key.length));
+    }
+    return out;
+  }
+
+  var state = { team: "", solved: {}, hints: {} };
+  try { state = JSON.parse(localStorage.getItem("ctf-state")) || state; } catch (e) {}
+  function saveState() { try { localStorage.setItem("ctf-state", JSON.stringify(state)); } catch (e) {} }
+
+  function render() {
+    var score = 0, solved = 0;
+    for (var n = 1; n <= 9; n++) {
+      var card = document.getElementById("c" + n);
+      if (state.solved[n]) { score += POINTS[n]; solved++; card.classList.add("solved"); }
+      else card.classList.remove("solved");
+      if (state.hints[n]) {
+        score -= HINT_COST;
+        card.querySelector(".hinttext").innerText = "Hint: " + HINTS[n];
+      }
+    }
+    document.getElementById("score").innerText = score;
+    document.getElementById("solvedCount").innerText = solved + " / 9 solved";
+  }
+
+  function build() {
+    for (var n = 1; n <= 9; n++) (function (n) {
+      var box = document.querySelector("#c" + n + " .answer");
+      box.innerHTML = '<input placeholder="flag{...}" autocomplete="off"><button class="btn">Submit</button>' +
+        '<button class="btn hint">Hint (-' + HINT_COST + ')</button><div class="hinttext"></div><div class="feedback"></div>';
+      var input = box.querySelector("input"), fb = box.querySelector(".feedback");
+      function submit() {
+        var guess = input.value.trim().toLowerCase();
+        if (fingerprint(guess) === HASHES[n]) {
+          state.solved[n] = true; saveState(); render();
+          fb.className = "feedback good"; fb.innerText = "Correct! +" + POINTS[n] + " points";
+        } else {
+          fb.className = "feedback bad";
+          fb.innerText = guess.indexOf("flag{") === 0 ? "Not the right flag." : "Flags look like flag{...}";
+        }
+      }
+      box.querySelectorAll("button")[0].onclick = submit;
+      input.onkeydown = function (e) { if (e.key === "Enter") submit(); };
+      box.querySelector(".hint").onclick = function () {
+        if (state.hints[n] || confirm("Take a hint for " + HINT_COST + " points?")) {
+          state.hints[n] = true; saveState(); render();
+        }
+      };
+      if (state.solved[n]) { fb.className = "feedback good"; fb.innerText = "Solved!"; }
+    })(n);
+    var team = document.getElementById("team");
+    team.value = state.team || "";
+    team.oninput = function () { state.team = team.value; saveState(); };
+  }
+
+  // Challenge 7: the page decides who you are by reading the address bar.
+  function staffRoom() {
+    var role = new URLSearchParams(location.search).get("role");
+    var room = document.getElementById("staffroom");
+    if (!role) return;
+    role = role.trim().toLowerCase();
+    if (role === "guest") room.innerText = "Welcome, guest. Staff room: ACCESS DENIED 🚫";
+    else if (fingerprint(unlock("07080c0e150f011b0c1c3e101f1c1d153b19010b3e111f0513", role)) === HASHES[7]) room.innerText = "Welcome, " + role + ". Staff room open: " + unlock("07080c0e150f011b0c1c3e101f1c1d153b19010b3e111f0513", role);
+    else room.innerText = "Unknown role: " + role;
+  }
+
+  // Challenge 9
+  function openVault() {
+    var code = document.getElementById("vaultInput").value.trim();
+    var out = document.getElementById("vaultOut");
+    var flag = code ? unlock("091c0409240a0a063e0c173a6b5c00073a0f001b04100a081722", code) : "";
+    if (fingerprint(flag) === HASHES[9]) out.innerText = "🔓 Vault open: " + flag;
+    else out.innerText = "🔒 Wrong code.";
+  }
+
+  // Toolbox
+  function caesar(text, back) {
+    return text.replace(/[a-z]/gi, function (ch) {
+      var base = ch <= "Z" ? 65 : 97;
+      return String.fromCharCode((ch.charCodeAt(0) - base - back + 26 * 2) % 26 + base);
+    });
+  }
+  function tool(kind) {
+    var text = document.getElementById("toolIn").value.trim();
+    var out = document.getElementById("toolOut");
+    var shift = document.getElementById("shift").value;
+    document.getElementById("shiftNum").innerText = shift;
+    if (!text) { out.innerText = "Paste something in the box first."; return; }
+    try {
+      if (kind === "b64") out.innerText = atob(text);
+      if (kind === "bin") out.innerText = text.split(/\s+/).map(function (b) { return String.fromCharCode(parseInt(b, 2)); }).join("");
+      if (kind === "caesar") out.innerText = caesar(text, Number(shift));
+      if (kind === "all") {
+        var lines = [];
+        for (var s = 1; s <= 25; s++) lines.push((s < 10 ? " " : "") + s + ":  " + caesar(text, s));
+        out.innerText = lines.join("\n");
+      }
+    } catch (e) {
+      out.innerText = "That doesn't look like the right kind of text for this tool.";
+    }
+  }
+
+  function resetAll() {
+    if (confirm("Erase your score and start over?")) {
+      state = { team: "", solved: {}, hints: {} }; saveState(); location.href = location.pathname;
+    }
+  }
+
+  build(); render(); staffRoom();
+</script>
+</body>
+</html>
