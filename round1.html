@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Round 1 · CS Club CTF</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="top"></div>
+
+<h2 class="round r1">Round 1 · Look under the hood</h2>
+<p class="intro">A web page is just text. Two flags are hiding on this page.</p>
+
+<section class="card" id="c1">
+  <h3>1. Comment Section <span class="pts">50</span></h3>
+  <p>The developer of this page left a note for themselves. Visitors can't see it on the page... but it's still in the code.</p>
+  <!-- NOTE TO SELF: remember to delete this before the site goes live!  flag{always_read_the_source} -->
+  <div class="answer"></div>
+</section>
+
+<section class="card" id="c2">
+  <h3>2. Invisible Ink <span class="pts">75</span></h3>
+  <p>There is a flag written inside this box right now. You just can't see it.</p>
+  <p class="ink">&#102;&#108;&#97;&#103;&#123;&#104;&#105;&#100;&#100;&#101;&#110;&#95;&#105;&#115;&#95;&#110;&#111;&#116;&#95;&#103;&#111;&#110;&#101;&#125;</p>
+  <div class="answer"></div>
+</section>
+
+<div id="pager"></div>
+<script src="ctf.js"></script>
+</body>
+</html>

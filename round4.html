@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Round 4 · CS Club CTF</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="top"></div>
+
+<h2 class="round r4">Round 4 · Never trust the browser</h2>
+<p class="intro">Anything that runs on your computer, you can read and change. That includes the address bar and this page's code.</p>
+
+<section class="card" id="c7">
+  <h3>7. Guest Pass <span class="pts">150</span></h3>
+  <p>The staff room only opens for admins. You are not an admin. Yet.</p>
+  <a class="btn" href="?role=guest#c7">Log in as guest</a>
+  <div id="staffroom" class="screen">Not logged in.</div>
+  <div class="answer"></div>
+</section>
+
+<section class="card" id="c8">
+  <h3>8. The Bouncer <span class="pts">150</span></h3>
+  <p>This door has a password. The bouncer checking it is standing right here in the page.</p>
+  <input id="bouncerInput" placeholder="Password" autocomplete="off">
+  <button class="btn" onclick="knock()">Knock</button>
+  <div id="bouncerOut" class="screen">The bouncer stares at you.</div>
+  <script>
+    // TODO: move this check to the server before launch!!
+    function checkPassword(guess) {
+      return btoa(guess) === "c3dvcmRmaXNo";
+    }
+    function knock() {
+      var guess = document.getElementById("bouncerInput").value;
+      if (checkPassword(guess)) {
+        document.getElementById("bouncerOut").innerText = "Come on in. " + unlock("151b0e151f05051a0d1d0330010d020c2c0b1b120c1917390f12011f0a", guess);
+      } else {
+        document.getElementById("bouncerOut").innerText = "Wrong password. Go away.";
+      }
+    }
+  </script>
+  <div class="answer"></div>
+</section>
+
+<div id="toolbox"></div>
+
+<div id="pager"></div>
+<script src="ctf.js"></script>
+</body>
+</html>

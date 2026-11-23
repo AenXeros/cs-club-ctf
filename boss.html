@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Final Boss · CS Club CTF</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="top"></div>
+
+<h2 class="round r5">Final Boss · The Vault</h2>
+<p class="intro">Everything you learned today, in one lock.</p>
+
+<section class="card boss" id="c9">
+  <h3>9. The Vault <span class="pts">300</span></h3>
+  <p>The vault code is hidden somewhere on this page, and it's protected twice.</p>
+  <!-- vault code backup. I encoded it AND shifted it, so it's totally safe:  dHVqc194anhmcmpfNDI= -->
+  <input id="vaultInput" placeholder="Vault code" autocomplete="off">
+  <button class="btn" onclick="openVault()">Open</button>
+  <div id="vaultOut" class="screen">🔒 Locked.</div>
+  <div class="answer"></div>
+</section>
+
+<div id="toolbox"></div>
+
+<div id="pager"></div>
+<script src="ctf.js"></script>
+</body>
+</html>
